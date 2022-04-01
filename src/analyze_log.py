@@ -6,7 +6,7 @@ def most_requested_dish_per_customer(customer, file):
     for request in file:
         if request[0] == customer:
             list_of_dishes.append(request[1])
-    result = max(set(list_of_dishes))
+    result = max(set(list_of_dishes), key=list_of_dishes.count)
     return result
 
 
@@ -82,13 +82,14 @@ def analyze_log(path_to_file):
         days_that_joao_did_not_go_to_the_restaurant = (
             days_never_went_to_the_restaurant_per_customer("joao", file)
         )
-        result = {
-            most_requested_dish_by_maria,
-            number_of_times_arnaldo_requested_hamburger,
-            dishes_that_joao_never_requested,
-            days_that_joao_did_not_go_to_the_restaurant,
-        }
-        writing_txt("./data/mkt_campaign.txt", result)
+
+        writing_txt(
+            "./data/mkt_campaign.txt",
+            f"{most_requested_dish_by_maria}\n"
+            f"{number_of_times_arnaldo_requested_hamburger}\n"
+            f"{dishes_that_joao_never_requested}\n"
+            f"{days_that_joao_did_not_go_to_the_restaurant}\n",
+        )
 
     except FileNotFoundError:
         raise FileNotFoundError(f"Arquivo inexistente: {path_to_file}")
@@ -99,7 +100,7 @@ def analyze_log(path_to_file):
 # Quais pratos 'joao' nunca pediu?
 # Quais dias 'joao' nunca foi na lanchonete?
 
-print(analyze_log("./data/orders_1.csv"))
+# print(analyze_log("./data/orders_1.csv"))
 
 # hamburguer
 # 1
